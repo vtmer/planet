@@ -17,6 +17,9 @@ define([
             this.$el.html(PostsTmpl);
 
             posts.on('add', function(post) {
+                /* apply some drity hack */
+                $('.loading', self.$el).hide();
+
                 var view =  new PostView({model: post});
                 self.$el.html(self.$el.html() + view.render());
             });
