@@ -1,0 +1,16 @@
+{
+  "name": "vtm-planet",
+  "version": "0.0.1",
+  "dependencies": {
+    "backbone": "~1.0.0",
+    "requirejs": "~2.1.5",
+    "underscore": "~1.4.4",
+    "jquery": "~1.8.3",
+    "bootstrap": "~2.3.1"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
