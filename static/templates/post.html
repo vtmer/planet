@@ -1,9 +1,11 @@
-<section>
-  <header>
-    <h1><%= post.title %></h1>
-    <h3><%= post.author %></h3>
-  </header>
-  <article>
+<div class="post-item">
+  <h3 class="post-item-title">
+    <a href="<%= post.url %>"><%= post.title %></a>
+  </h3>
+  <div class="post-item-meta">
+    <a href="#" class="post-item-author"><%= post.author %></a>
+  </div>
+  <div class='content'>
     <%= post.content %>
-  </article>
-</section>
+  </div>
+</div>
