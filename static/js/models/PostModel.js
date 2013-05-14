@@ -12,9 +12,18 @@ define([
         },
 
         parse: function(raw) {
-            var _content, _author;
+            var _content, _author, _domain;
 
-            _content = function(raw) {
+            _domain = (function(raw) {
+                var domainRegex = /^http[s]{0,}:\/\/([\w\d\-_\.]+)/;
+
+                if (domainRegex.test(raw.link)) {
+                    return domainRegex.exec(raw.link)[1];
+                }
+                return '';
+            })(raw);
+
+            _content = (function(raw) {
                 var type;
 
                 if (raw['content:encoded'] !== undefined &&
@@ -35,11 +44,10 @@ define([
                     }
                     return '';
                 }
-            };
+            })(raw);
 
-            _author = function(raw) {
-                var type, author,
-                    domainRegex = /^http[s]{0,}:\/\/([\w\.]+)/, domain;
+            _author = (function(raw) {
+                var type, author;
 
                 if (raw['dc:creator'] !== undefined) {
                     return raw['dc:creator'];
@@ -51,25 +59,22 @@ define([
                         return raw.author.name;
                     }
                 } else {
-                    if (domainRegex.test(raw.link)) {
-                        domain = domainRegex.exec(raw.link)[1];
-                        author = Authors.get_by_domain(domain);
-                        if (author !== undefined) {
-                            return author.get('name');
-                        } else {
-                            return domain;
-                        }
+                    author = Authors.get_by_domain(_domain);
+                    if (author !== undefined) {
+                        return author.get('name');
                     }
+                    return domain;
                 }
                 return '';
-            };
+            })(raw);
 
             return {
                 link: raw.link,
                 title: raw.title,
                 pubDate: raw.pubDate,
-                content: _content(raw),
-                author: _author(raw)
+                domain: 'http://' + _domain,
+                content: _content,
+                author: _author
             };
         }
     });
