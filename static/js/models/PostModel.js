@@ -1,6 +1,7 @@
 define([
-    'backbone'
-], function(backbone) {
+    'backbone',
+    'collections/AuthorsCollection'
+], function(backbone, Authors) {
     return backbone.Model.extend({
         defaults: {
             author: '',
@@ -37,7 +38,8 @@ define([
             };
 
             _author = function(raw) {
-                var type;
+                var type, author,
+                    domainRegex = /^http[s]{0,}:\/\/([\w\.]+)/, domain;
 
                 if (raw['dc:creator'] !== undefined) {
                     return raw['dc:creator'];
@@ -47,6 +49,16 @@ define([
                         return raw.author;
                     } else if (type === 'object') {
                         return raw.author.name;
+                    }
+                } else {
+                    if (domainRegex.test(raw.link)) {
+                        domain = domainRegex.exec(raw.link)[1];
+                        author = Authors.get_by_domain(domain);
+                        if (author !== undefined) {
+                            return author.get('name');
+                        } else {
+                            return domain;
+                        }
                     }
                 }
                 return '';
