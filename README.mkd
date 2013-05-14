@@ -1,3 +1,7 @@
 # Blogroll for VTMer
 
 http://planet.vtmer.com
+
+## build from src
+
+    r.js -o build.js

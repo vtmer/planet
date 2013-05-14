@@ -1,4 +1,5 @@
-require.config({
+({
+    baseUrl: 'app',
     shim: {
         underscore: {
             exports: '_'
@@ -12,17 +13,8 @@ require.config({
         jquery: 'libs/jquery/jquery.min',
         underscore: 'libs/underscore/underscore-min',
         backbone: 'libs/backbone/backbone-min',
-        overflow: 'libs/jquery-overflow/jquery.overflow', 
-        templates: '../templates'
-    }
-});
-
-require([
-        'app'
-], function(app) {
-    console.log('hello world');
-
-    app.kickoff();
-
-    return {};
-});
+        overflow: 'libs/jquery-overflow/jquery.overflow'
+    },
+    name: 'main',
+    out: 'static/js/app.js'
+})
