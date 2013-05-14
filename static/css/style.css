@@ -44,8 +44,12 @@
   margin: 7px auto;
 }
 #cover-meta {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5;
+}
+#cover-meta span {
+  font-style: italic;
+  font-weight: 500;
 }
 #wrapper {
 	position: absolute;
