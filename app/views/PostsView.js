@@ -14,16 +14,18 @@ define([
             var posts = new PostsCollection(), data,
                 self = this;
 
-            console.log('Display some posts');
             this.$el.html(PostsTmpl);
 
-            posts.on('add', function(post) {
-                var view =  new PostView({model: post});
+            posts.on('sync', function(posts) {
+                var uniqPosts, view;
 
-                self.$el.html(self.$el.html() + view.render());
-
-                //$('p.content').paraOverflow();
-                //console.log($('p.content'));
+                uniqPosts = _.uniq(posts.models, function(post) {
+                    return post.get('author');
+                });
+                _.each(uniqPosts, function(post) {
+                    view = new PostView({model: post});
+                    self.$el.html(self.$el.html() + view.render());
+                });
             });
 
             posts.fetch();
