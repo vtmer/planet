@@ -55,6 +55,7 @@
 	position: absolute;
 	max-width: 69%;
         min-width: 69%;
+        overflow-x: hidden;
 	left: 30%;
 	top: 0;
 }
