@@ -63,7 +63,7 @@ define([
                     if (author !== undefined) {
                         return author.get('name');
                     }
-                    return domain;
+                    return _domain;
                 }
                 return '';
             })(raw);
