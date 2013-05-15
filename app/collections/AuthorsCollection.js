@@ -15,6 +15,7 @@ define([
     
     return new collection([
         { domain: 'www.vinqon.com', name: '咏聪' },
-        { domain: 'seventhZhao.github.com', name: '潇滨' }
+        { domain: 'seventhZhao.github.com', name: '潇滨' },
+        { domain: 'zhkzyth.github.com', name: '汉宽' }
     ]);
 });
