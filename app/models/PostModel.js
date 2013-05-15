@@ -1,7 +1,8 @@
 define([
+    'jquery',
     'backbone',
     'collections/AuthorsCollection'
-], function(backbone, Authors) {
+], function($, backbone, Authors) {
     return backbone.Model.extend({
         defaults: {
             author: '',
@@ -12,13 +13,35 @@ define([
         },
 
         parse: function(raw) {
-            var _content, _author, _domain;
+            var _author, _domain, _content, _summary;
 
             _domain = (function(raw) {
                 var domainRegex = /^http[s]{0,}:\/\/([\w\d\-_\.]+)/;
 
                 if (domainRegex.test(raw.link)) {
                     return domainRegex.exec(raw.link)[1];
+                }
+                return '';
+            })(raw);
+
+            _author = (function(raw) {
+                var type, author;
+
+                if (raw['dc:creator'] !== undefined) {
+                    return raw['dc:creator'];
+                } else if (raw.author !== undefined) {
+                    type = typeof raw.author;
+                    if (type === 'string') {
+                        return raw.author;
+                    } else if (type === 'object') {
+                        return raw.author.name;
+                    }
+                } else {
+                    author = Authors.get_by_domain(_domain);
+                    if (author !== undefined) {
+                        return author.get('name');
+                    }
+                    return _domain;
                 }
                 return '';
             })(raw);
@@ -46,26 +69,14 @@ define([
                 }
             })(raw);
 
-            _author = (function(raw) {
-                var type, author;
-
-                if (raw['dc:creator'] !== undefined) {
-                    return raw['dc:creator'];
-                } else if (raw.author !== undefined) {
-                    type = typeof raw.author;
-                    if (type === 'string') {
-                        return raw.author;
-                    } else if (type === 'object') {
-                        return raw.author.name;
-                    }
-                } else {
-                    author = Authors.get_by_domain(_domain);
-                    if (author !== undefined) {
-                        return author.get('name');
-                    }
-                    return _domain;
+            _summary = (function(raw) {
+                var summary;
+                try {
+                    summary = $(_content).text();
+                } catch (e) {
+                    summary = $('<p>' + _content + '</p>').text();
                 }
-                return '';
+                return (summary.substring(0, 150) + '...').split('\n').join('');
             })(raw);
 
             return {
@@ -73,8 +84,9 @@ define([
                 title: raw.title,
                 pubDate: raw.pubDate,
                 domain: 'http://' + _domain,
+                author: _author,
                 content: _content,
-                author: _author
+                summary: _summary
             };
         }
     });
