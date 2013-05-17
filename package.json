@@ -4,7 +4,9 @@
   "description": "blog planet for vtmer",
   "main": "index.js",
   "dependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-watch": "~0.4.3"
   },
   "devDependencies": {},
   "scripts": {
@@ -20,7 +22,7 @@
     "vtmer"
   ],
   "author": "hbc",
-  "license": "BSD",
+  "license": "nolicense",
   "gitHead": "1c119ffef40cc37fcb38486a63e2d8da34817700",
   "readmeFilename": "README.mkd"
 }
