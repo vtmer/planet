@@ -70,12 +70,20 @@ define([
             })(raw);
 
             _summary = (function(raw) {
-                var summary;
-                try {
-                    summary = $(_content).text();
-                } catch (e) {
-                    summary = $('<p>' + _content + '</p>').text();
-                }
+                var summary, clean_content;
+
+                clean_content = _content;
+                _.each([
+                       /<img.*>/gi,
+                       /<script.*>.*<\/script>/gi,
+                       /<link.*>.*<\/link>/gi,
+                       /<style.*>.*<\/style>/gi
+                ], function(re) {
+                    clean_content = clean_content.replace(re, '');       
+                });
+
+                summary = $('<p>' + clean_content + '</p>').text();
+
                 return (summary.substring(0, 150) + '...').split('\n').join('')
                        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
                        .replace(/>/g, '&gt;');
