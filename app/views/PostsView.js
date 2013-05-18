@@ -17,15 +17,18 @@ define([
             this.$el.html(PostsTmpl);
 
             posts.on('sync', function(posts) {
-                var uniqPosts, view;
+                var uniqPosts, view,
+                    cached = self.$el.html();
 
                 uniqPosts = _.uniq(posts.models, function(post) {
                     return post.get('author');
                 });
                 _.each(uniqPosts, function(post) {
                     view = new PostView({model: post});
-                    self.$el.html(self.$el.html() + view.render());
+                    cached += view.render();
                 });
+
+                self.$el.html(cached);
             });
 
             posts.fetch();
