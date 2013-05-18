@@ -76,7 +76,9 @@ define([
                 } catch (e) {
                     summary = $('<p>' + _content + '</p>').text();
                 }
-                return (summary.substring(0, 150) + '...').split('\n').join('');
+                return (summary.substring(0, 150) + '...').split('\n').join('')
+                       .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;');
             })(raw);
 
             return {
