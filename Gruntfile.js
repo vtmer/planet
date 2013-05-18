@@ -26,11 +26,8 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            options: {
-                livereload: true
-            },
             app: {
-                files: ['app/*'],
+                files: ['app/**'],
                 tasks: ['requirejs:compile']
             },
             style: {
