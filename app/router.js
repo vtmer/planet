@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'views/PostsView'
-], function(backbone, PostsView) {
+    'views/PostsView',
+    'views/ThemesView'
+], function(backbone, PostsView, ThemesView) {
     var AppRouter, kickoff;
 
     AppRouter = backbone.Router.extend({
