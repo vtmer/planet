@@ -9,6 +9,7 @@ define([
 ], function($, overflow, _, backbone, PostsCollection, PostsTmpl, PostView) {
     return backbone.View.extend({
         el: $('#posts'),
+        loadingEl: $('.loading'),
 
         render: function() {
             var posts = new PostsCollection(), data,
@@ -28,6 +29,7 @@ define([
                     cached += view.render();
                 });
 
+                self.loadingEl.fadeOut();
                 self.$el.html(cached);
             });
 
