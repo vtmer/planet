@@ -3,7 +3,7 @@ define([
        'backbone',
        'collections/ThemesCollection'
 ], function($, backbone, themes) {
-    $('head').append(themes.where({ author: 'sherry' })[0].stylesheet());
+    // $('head').append(themes.where({ author: 'sherry' })[0].stylesheet());
     return backbone.View.extend({
     });
 });
