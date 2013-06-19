@@ -28,7 +28,10 @@ module.exports = function(grunt) {
         watch: {
             app: {
                 files: ['app/**'],
-                tasks: ['requirejs:compile']
+                tasks: ['requirejs:compile'],
+                options: {
+                    debounceDelay: 1000
+                }
             },
             style: {
                 files: ['static/css/style.css']
